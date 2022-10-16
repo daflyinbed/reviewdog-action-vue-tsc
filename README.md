@@ -52,26 +52,26 @@ inputs:
   reviewdog_flags:
     description: 'Additional reviewdog flags'
     default: ''
-  ### Flags for <linter-name> ###
-  locale:
-    description: '-locale flag of misspell. (US/UK)'
+  ### Flags for vue-tsc ###
+  vue_tsc_flags:
+    description: |
+      Flags and args to pass to tsc.
+      Default is ``.
     default: ''
+    required: false
 ```
 
 ## Usage
-<!-- TODO: update. replace `template` with the linter name -->
-
 ```yaml
 name: reviewdog
 on: [pull_request]
 jobs:
-  # TODO: change `linter_name`.
   linter_name:
-    name: runner / <linter-name>
+    name: runner / vue-tsc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: reviewdog/action-template@v1
+      - uses: daflyinbed/reviewdog-action-vue-tsc@v1
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
