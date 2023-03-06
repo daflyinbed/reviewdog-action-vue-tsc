@@ -4,23 +4,17 @@ cd "${GITHUB_WORKSPACE}/${INPUT_WORKDIR}" || exit 1
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
-if [ ! -f "$(npm bin)"/vue-tsc ]; then
-  echo "::group::🔄 Running npm install to install vue-tsc ..."
+npx --no-install -c 'vue-tsc -v'
+if [ $? -ne 0 ]; then
+  echo '::group:: Running `npm install` to install vue-tsc ...'
   npm install
-  echo "::endgroup::"
+  echo '::endgroup::'
 fi
 
-if [ ! -f "$(npm bin)"/vue-tsc ]; then
-  echo "❌ Unable to locate or install vue-tsc. Did you provide a workdir which contains a valid package.json?"
-  exit 1
-else
-
-  echo ℹ️ vue-tsc version: "$("$(npm bin)"/vue-tsc --version)"
+  echo "vue-tsc version:$(npx --no-install -c 'vue-tsc -v')"
 
   echo "::group::📝 Running vue-tsc with reviewdog 🐶 ..."
-
-  # shellcheck disable=SC2086
-  "$(npm bin)"/vue-tsc ${INPUT_VUE_TSC_FLAGS} \
+  npx --no-install -c "vue-tsc ${INPUT_VUE_TSC_FLAGS}" \
     | reviewdog -f=tsc \
       -name="${INPUT_TOOL_NAME}" \
       -reporter="${INPUT_REPORTER}" \
