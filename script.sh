@@ -6,7 +6,7 @@ export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 if [ ! -f "$(npm bin)"/vue-tsc ]; then
   echo "::group::🔄 Running npm install to install vue-tsc ..."
-  npm install
+  pnpm install
   echo "::endgroup::"
 fi
 
